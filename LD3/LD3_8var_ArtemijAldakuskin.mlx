@@ -1,0 +1,92 @@
+% Artemij Aldakuškin
+% Grupe: EDIf-25/1
+% Data: 2026-09-21
+
+%1
+x = 0:0.1:2*pi;
+f = x.^3 + tan(x);
+figure()
+plot(x, f, 'bo')
+xlabel('X');
+ylabel('F(X)');
+title('Funkcijos grafikas');
+grid on;
+legend('f(x) = x^3 + tan(x)');
+axis([min(x) max(x) min(f) max(f)]);
+f1 = exp(x);
+f2 = exp(3.*x);
+f3 = exp(5.*x);
+figure()
+plot(x,f1,'r',x,f2,'g',x,f3,'b');
+xlabel('X');
+ylabel('F(X)');
+title('Eksponentiniu funkciju grafikai');
+grid on;
+legend('f1(x) = e^x', 'f2(x) = e^(3x)', 'f3(x) = e^(5x)');
+axis([min(x) max(x) min([f1,f2,f3]) max([f1,f2,f3])])
+
+%2
+grades = [9 2 3 5;
+    10 10 10 10;
+    3 8 9 10;
+    7 8 7 8;
+    6 7 6 7;
+    2 2 2 2;];
+figure()
+subplot(2,1,1);
+bar(grades');
+xlabel('Egzaminas');
+ylabel('Pazymiai');
+title('a)');
+ylim([0 10]);
+grid on;
+legend('Jonas', 'Petras', 'Mantas', 'Tomas', 'Lukas', 'Andrius')
+
+subplot(2,1,2);
+stem(grades)
+xlabel('Studentas');
+ylabel('Pazymiai');
+title('b)');
+ylim([0 10])
+grid on;
+
+%papildoma
+t = 0:0.002:1;
+A = 7;
+f = 9;
+U1 = 4.5;
+U2 = 2.5;
+o = 1.2;
+s = A * cos(2 * pi * f .* t);
+n = o * randn(size(t));
+s_n = s + n;
+s_n_U1 = s_n(s_n > U1);
+s_n_U2 = s_n;
+s_n_U2(abs(s_n_U2) < U2) = 0;
+figure()
+subplot(2,1,1);
+plot(t,s_n,'-.',t,s_n_U2,'-')
+yline(U1, 'b--', 'LineWidth', 1)
+yline(U2,'r')
+xlabel('Laikas, s');
+ylabel('Itampa, V');
+title('Pradinis ir filtruotas signalai');
+grid on;
+legend('Pradinis signalas', 'Filtruotas signalas', 'U1', 'U2', 'Location', 'southwest');
+axis([min(t) max(t) min(s_n) max(s_n)])
+subplot(2,1,2)
+t_U1 = t(s_n > U1);
+hold on
+stem(t_U1, s_n_U1)
+max_s_n_U1 = max(s_n_U1);
+t_max = t_U1(s_n_U1 == max_s_n_U1);
+plot(t_max, max_s_n_U1, 'o');
+min_s_n_U1 = min(s_n_U1);
+t_min= t_U1(s_n_U1 == min_s_n_U1);
+plot(t_min, min_s_n_U1, 'ko');
+xlabel('Laikas, s');
+ylabel('Itampa, V');
+title('Signalo reiksmes virs U1');
+grid on;
+legend('Signalas virs U1', 'Maksimumas', 'Minimumas', 'Location', 'southwest');
+axis([min(t_U1) max(t_U1) min(s_n_U1) max(s_n_U1)])
